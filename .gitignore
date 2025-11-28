@@ -1,0 +1,7 @@
+.vscode
+
+# Terraform generated files
+.terraform
+*.tfstate
+*.tfstate*
+.terraform.lock.hcl
