@@ -1,10 +1,5 @@
 resource "aws_s3_bucket" "state_bucket" {
   bucket = var.s3_state_bucket_name
-
-  tags = {
-    CreatedWith = "Terraform"
-    ProjectName = "SmartBin"
-  }
 }
 
 resource "aws_s3_bucket_versioning" "state_bucket_verioning" {
