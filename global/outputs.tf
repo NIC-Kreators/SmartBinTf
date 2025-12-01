@@ -24,6 +24,11 @@ output "aws_account_id" {
 }
 
 output "oidc_provider_arn" {
-  value       = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${var.github_actions_token_host}"
+  value       = aws_iam_openid_connect_provider.github_actions.arn
   description = "ARN of the GitHub OIDC provider"
+}
+
+output "oidc_provider_url" {
+  value       = aws_iam_openid_connect_provider.github_actions.url
+  description = "URL of the GitHub OIDC provider"
 }
