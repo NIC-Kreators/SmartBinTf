@@ -8,7 +8,7 @@ data "aws_iam_policy_document" "github_role_policy" {
 
     principals {
       type        = "Federated"
-      identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${var.github_actions_token_host}"]
+      identifiers = [aws_iam_openid_connect_provider.github_actions.arn]
     }
 
     condition {
