@@ -30,7 +30,7 @@ resource "aws_ssm_parameter" "otel_config" {
       prometheus = {
         endpoint = "0.0.0.0:${var.service_definitions.otel_metrics.port}"
       }
-      otlphttp_seq = {
+      "otlphttp/seq" = {
         endpoint = "http://${aws_eip.seq_ip.public_ip}:5341/ingest/otlp"
         headers = var.seq_api_key != "" ? {
           "X-Seq-ApiKey" = var.seq_api_key
@@ -76,12 +76,12 @@ resource "aws_ssm_parameter" "otel_config" {
         traces = {
           receivers  = ["otlp"]
           processors = ["batch"]
-          exporters  = ["otlphttp_seq", "awsxray"]
+          exporters  = ["otlphttp/seq", "awsxray"]
         }
         logs = {
           receivers  = ["otlp"]
           processors = ["batch"]
-          exporters  = ["otlphttp_seq"]
+          exporters  = ["otlphttp/seq"]
         }
       }
     }
