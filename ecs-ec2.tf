@@ -43,7 +43,7 @@ resource "aws_autoscaling_group" "ecs" {
   vpc_zone_identifier       = aws_subnet.public[*].id
   target_group_arns         = [aws_lb_target_group.api.arn]
   health_check_type         = "ELB"
-  health_check_grace_period = 600
+  health_check_grace_period = 300
   min_size                  = var.ecs_min_capacity
   max_size                  = var.ecs_max_capacity
   desired_capacity          = var.ecs_desired_capacity
@@ -59,6 +59,8 @@ resource "aws_autoscaling_group" "ecs" {
     strategy = "Rolling"
     preferences {
       min_healthy_percentage = 50
+      instance_warmup        = 300  # Reduce warmup time
+      max_healthy_percentage = 200  # Allow more instances during refresh
     }
   }
 

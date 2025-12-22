@@ -39,13 +39,6 @@ resource "aws_ssm_parameter" "otel_config" {
           insecure = true
         }
       }
-      awscloudwatchmetrics = {
-        region    = var.aws_region
-        namespace = "SmartBin/API"
-      }
-      awsxray = {
-        region = var.aws_region
-      }
     }
 
     processors = {
@@ -71,12 +64,12 @@ resource "aws_ssm_parameter" "otel_config" {
         metrics = {
           receivers  = ["otlp"]
           processors = ["batch"]
-          exporters  = ["prometheus", "awscloudwatchmetrics"]
+          exporters  = ["prometheus"]
         }
         traces = {
           receivers  = ["otlp"]
           processors = ["batch"]
-          exporters  = ["otlphttp/seq", "awsxray"]
+          exporters  = ["otlphttp/seq"]
         }
         logs = {
           receivers  = ["otlp"]

@@ -13,3 +13,5 @@ ecs_instance_type = "t3.small"
 ecs_min_capacity = 1
 ecs_desired_capacity = 1
 ecs_max_capacity = 3
+
+enable_ssh_access = false
