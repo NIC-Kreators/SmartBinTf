@@ -264,7 +264,7 @@ The .NET API is automatically configured with:
 ```bash
 # ASP.NET Core
 ASPNETCORE_ENVIRONMENT=Production
-ASPNETCORE_URLS=http://+:8080
+ASPNETCORE_URLS=http://0.0.0.0:8080
 
 # Database
 MongoDB__ConnectionString=mongodb://docdb-endpoint:27017/...

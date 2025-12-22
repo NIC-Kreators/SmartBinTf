@@ -4,7 +4,7 @@ locals {
   # Base environment variables for .NET API
   base_env_vars = [
     { name = "ASPNETCORE_ENVIRONMENT", value = var.environment },
-    { name = "ASPNETCORE_URLS", value = "http://+:${var.service_definitions.api.port}" },
+    { name = "ASPNETCORE_URLS", value = "http://0.0.0.0:${var.service_definitions.api.port}" },
     { name = "MongoDB__ConnectionString", value = "mongodb://${aws_docdb_cluster.main.endpoint}:${aws_docdb_cluster.main.port}/?tls=true&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false" },
   ]
 
