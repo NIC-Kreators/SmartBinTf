@@ -38,7 +38,7 @@ resource "aws_eip" "seq_ip" {
 }
 
 resource "aws_instance" "seq_instance" {
-  ami             = data.aws_ami.amazon_linux_2023.id
+  ami             = data.aws_ami.amazon_linux_2023_arm.id
   instance_type   = var.seq_instance_type
   subnet_id       = aws_subnet.public[0].id
   vpc_security_group_ids = [aws_security_group.seq_sg.id]
