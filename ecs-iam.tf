@@ -1,6 +1,6 @@
-# ECS Service Linked Role
-resource "aws_iam_service_linked_role" "ecs" {
-  aws_service_name = "ecs.amazonaws.com"
+# ECS Service Linked Role (use existing one)
+data "aws_iam_role" "ecs_service_linked_role" {
+  name = "AWSServiceRoleForECS"
 }
 
 # ECS Task Execution Role
