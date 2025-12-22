@@ -65,7 +65,8 @@ resource "aws_iam_role_policy" "github_actions_inline_policy" {
           "ssm:*",
           "mq:*",
           "servicediscovery:*",
-          "secretsmanager:*"
+          "secretsmanager:*",
+          "autoscaling:*"
         ]
         Resource = "*"
       }
