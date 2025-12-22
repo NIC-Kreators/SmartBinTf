@@ -11,7 +11,7 @@ seq_instance_type = "t4g.small"
 ecs_instance_type = "t3.small"
 
 ecs_min_capacity = 1
-ecs_desired_capacity = 1
-ecs_max_capacity = 3
+ecs_desired_capacity = 3
+ecs_max_capacity = 5
 
 enable_ssh_access = false
