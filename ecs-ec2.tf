@@ -47,6 +47,7 @@ resource "aws_autoscaling_group" "ecs" {
   min_size                  = var.ecs_min_capacity
   max_size                  = var.ecs_max_capacity
   desired_capacity          = var.ecs_desired_capacity
+  protect_from_scale_in     = true
 
   launch_template {
     id      = aws_launch_template.ecs.id
