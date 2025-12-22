@@ -11,11 +11,11 @@ on:
 env:
   AWS_REGION: eu-central-1
   TF_VERSION: 1.14.3
-  TF_VARS_rmq_username: ${{ secrets.RMQ_USERNAME }}
-  TF_VARS_rmq_password: ${{ secrets.RMQ_PASSWORD }}
-  TF_VARS_docdb_username: ${{ secrets.DOCDB_USERNAME }}
-  TF_VARS_docdb_password: ${{ secrets.DOCDB_PASSWORD }}
-  TF_VARS_jwt_secret: ${{ secrets.JWT_SECRET }}
+  TF_VAR_rmq_username: ${{ secrets.RMQ_USERNAME }}
+  TF_VAR_rmq_password: ${{ secrets.RMQ_PASSWORD }}
+  TF_VAR_docdb_username: ${{ secrets.DOCDB_USERNAME }}
+  TF_VAR_docdb_password: ${{ secrets.DOCDB_PASSWORD }}
+  TF_VAR_jwt_secret: ${{ secrets.JWT_SECRET }}
 
 permissions:
   id-token: write
