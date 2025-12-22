@@ -14,6 +14,8 @@ resource "aws_ecs_cluster" "main" {
   tags = {
     Name = "${var.project_name}-cluster"
   }
+
+  depends_on = [aws_iam_service_linked_role.ecs]
 }
 
 # Service Discovery Namespace for Service Connect

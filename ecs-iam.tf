@@ -1,3 +1,8 @@
+# ECS Service Linked Role
+resource "aws_iam_service_linked_role" "ecs" {
+  aws_service_name = "ecs.amazonaws.com"
+}
+
 # ECS Task Execution Role
 resource "aws_iam_role" "ecs_task_execution" {
   name = "${lower(var.project_name)}-ecs-task-execution"
