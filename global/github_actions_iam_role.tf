@@ -61,7 +61,11 @@ resource "aws_iam_role_policy" "github_actions_inline_policy" {
           "s3:*",
           "dynamodb:*",
           "iam:*",
-          "vpc:*"
+          "vpc:*",
+          "ssm:*",
+          "mq:*",
+          "servicediscovery:*",
+          "secretsmanager:*"
         ]
         Resource = "*"
       }
