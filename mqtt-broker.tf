@@ -1,7 +1,7 @@
 resource "aws_mq_broker" "mqtt_broker" {
   broker_name        = "${lower(var.project_name)}-mqtt"
   engine_type        = "RabbitMQ"
-  engine_version     = "3.11.20"
+  engine_version     = "3.13"
   host_instance_type = "mq.t3.micro"
   deployment_mode    = "SINGLE_INSTANCE"
 
@@ -37,7 +37,7 @@ resource "aws_mq_configuration" "rabbitmq_config" {
   description    = "RabbitMQ MQTT Configuration"
   name           = "rabbitmq-mqtt-broker"
   engine_type    = "RabbitMQ"
-  engine_version = "3.11.20"
+  engine_version = "3.13"
 
   data = <<DATA
 # Default RabbitMQ delivery acknowledgement timeout is 30 minutes in milliseconds
