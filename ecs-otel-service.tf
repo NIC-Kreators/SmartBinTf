@@ -139,10 +139,7 @@ resource "aws_ecs_task_definition" "otel_collector" {
     essential = true
 
     healthCheck = {
-      command = [
-        "CMD-SHELL",
-        "nc -z localhost 13133 || exit 1"
-      ]
+      command     = ["/healthcheck"]
       interval    = 30
       timeout     = 10
       retries     = 3
