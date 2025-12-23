@@ -114,10 +114,6 @@ resource "aws_mq_configuration" "activemq_config" {
     <statisticsBrokerPlugin/>
     <timeStampingBrokerPlugin ttlCeiling="86400000" zeroExpirationOverride="86400000"/>
   </plugins>
-  <transportConnectors>
-    <transportConnector name="mqtt" uri="mqtt://0.0.0.0:1883"/>
-    <transportConnector name="mqtt+ssl" uri="mqtt+ssl://0.0.0.0:8883"/>
-  </transportConnectors>
 </broker>
 DATA
 }
