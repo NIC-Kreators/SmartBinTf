@@ -15,3 +15,9 @@ ecs_desired_capacity = 2
 ecs_max_capacity = 3
 
 enable_ssh_access = false
+
+# ECS Task Configuration
+api_memory = 256
+api_desired_count = 1
+otel_memory = 256
+auto_deploy_latest = true

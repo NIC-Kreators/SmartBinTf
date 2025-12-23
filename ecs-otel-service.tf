@@ -141,12 +141,12 @@ resource "aws_ecs_task_definition" "otel_collector" {
     healthCheck = {
       command = [
         "CMD-SHELL",
-        "curl -f http://localhost:13133 || exit 1"
+        "nc -z localhost 13133 || exit 1"
       ]
       interval    = 30
-      timeout     = 5
+      timeout     = 10
       retries     = 3
-      startPeriod = 60
+      startPeriod = 120
     }
   }])
 

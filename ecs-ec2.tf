@@ -41,8 +41,9 @@ resource "aws_launch_template" "ecs" {
 resource "aws_autoscaling_group" "ecs" {
   name                      = "${lower(var.project_name)}-ecs-asg"
   vpc_zone_identifier       = aws_subnet.public[*].id
-  target_group_arns         = [aws_lb_target_group.api.arn]
-  health_check_type         = "ELB"
+  # Don't attach target_group_arns here - ECS service handles target registration
+  # for bridge mode with dynamic port mapping
+  health_check_type         = "EC2"
   health_check_grace_period = 300
   min_size                  = var.ecs_min_capacity
   max_size                  = var.ecs_max_capacity
