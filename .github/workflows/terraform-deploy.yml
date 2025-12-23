@@ -68,10 +68,10 @@ jobs:
         working-directory: ./bootstrap
         run: terraform plan -out=tfplan
 
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        working-directory: ./bootstrap
-        run: terraform apply -auto-approve tfplan
+      # - name: Terraform Apply
+      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      #   working-directory: ./bootstrap
+      #   run: terraform apply -auto-approve tfplan
 
   global:
     name: Global
@@ -119,10 +119,10 @@ jobs:
         working-directory: ./global
         run: terraform plan -out=tfplan
 
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        working-directory: ./global
-        run: terraform apply -auto-approve tfplan
+      # - name: Terraform Apply
+      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      #   working-directory: ./global
+      #   run: terraform apply -auto-approve tfplan
 
   infrastructure:
     name: Infrastructure
@@ -170,10 +170,10 @@ jobs:
         working-directory: ./
         run: terraform plan -out=tfplan
   
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        working-directory: ./
-        run: terraform apply -auto-approve tfplan
+      # - name: Terraform Apply
+      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      #   working-directory: ./
+      #   run: terraform apply -auto-approve tfplan
 
   summary:
     name: Summary
