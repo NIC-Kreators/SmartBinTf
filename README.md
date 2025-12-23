@@ -271,7 +271,7 @@ MongoDB__ConnectionString=mongodb://docdb-endpoint:27017/...
 MongoDB__DatabaseName=SmartBinDatabase
 
 # Authentication (from Secrets Manager)
-Jwt__Secret=***
+Jwt__Key=***
 MongoDB__Username=***
 MongoDB__Password=***
 

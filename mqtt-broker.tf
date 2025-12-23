@@ -1,7 +1,7 @@
 resource "aws_security_group" "mqtt_broker_sg" {
   name        = "${var.project_name}-mqtt-sg"
   description = "Security group for RabbitMQ MQTT broker"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = aws_vpc.smart_bin_vpc.id
 
   ingress {
     description = "MQTT"

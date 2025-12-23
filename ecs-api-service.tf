@@ -30,7 +30,7 @@ resource "aws_ecs_task_definition" "api" {
     secrets = [
       { name = "MongoDB__Username", valueFrom = "${aws_secretsmanager_secret.api_secrets.arn}:MONGODB_USERNAME::" },
       { name = "MongoDB__Password", valueFrom = "${aws_secretsmanager_secret.api_secrets.arn}:MONGODB_PASSWORD::" },
-      { name = "Jwt__Secret", valueFrom = "${aws_secretsmanager_secret.api_secrets.arn}:JWT_SECRET::" }
+      { name = "Jwt__Key", valueFrom = "${aws_secretsmanager_secret.api_secrets.arn}:JWT_SECRET::" }
     ]
 
     logConfiguration = {
