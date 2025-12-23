@@ -47,13 +47,15 @@ resource "aws_ecs_task_definition" "api" {
 
     healthCheck = {
       command = [
-        "CMD-SHELL",
-        "curl -f http://localhost:${var.service_definitions.api.port}${var.api_health_check_path} || exit 1"
+        "CMD",
+        "/bin/sh",
+        "-c",
+        "wget -q -O /dev/null http://localhost:${var.service_definitions.api.port}${var.api_health_check_path} || exit 1"
       ]
       interval    = 30
       timeout     = 5
       retries     = 3
-      startPeriod = 120  # Increased start period
+      startPeriod = 120
     }
   }])
 
