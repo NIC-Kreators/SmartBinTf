@@ -56,7 +56,12 @@ resource "aws_mq_broker" "mqtt_broker" {
 
   subnet_ids          = [aws_subnet.public[0].id]
   publicly_accessible = true
-  security_groups = [ aws_security_group.mqtt_broker_sg.id ]
+  security_groups     = [aws_security_group.mqtt_broker_sg.id]
+
+  # Security groups cannot be changed after creation for RabbitMQ brokers
+  lifecycle {
+    ignore_changes = [security_groups]
+  }
 
   configuration {
     id       = aws_mq_configuration.rabbitmq_config.id
