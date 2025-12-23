@@ -1,6 +1,6 @@
 resource "aws_security_group" "mqtt_broker_sg" {
   name        = "${var.project_name}-mqtt-sg"
-  description = "Security group for RabbitMQ MQTT broker"
+  description = "Security group for ActiveMQ MQTT broker"
   vpc_id      = aws_vpc.smart_bin_vpc.id
 
   ingress {
@@ -17,20 +17,36 @@ resource "aws_security_group" "mqtt_broker_sg" {
     to_port     = 8883
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-  }  
+  }
 
   ingress {
-    description = "AMQPS"
-    from_port   = 5671
-    to_port     = 5671
+    description = "OpenWire"
+    from_port   = 61617
+    to_port     = 61617
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    description = "RabbitMQ Web Console"
-    from_port   = 443
-    to_port     = 443
+    description = "STOMP"
+    from_port   = 61614
+    to_port     = 61614
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "WebSocket"
+    from_port   = 61619
+    to_port     = 61619
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "ActiveMQ Web Console"
+    from_port   = 8162
+    to_port     = 8162
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -43,14 +59,14 @@ resource "aws_security_group" "mqtt_broker_sg" {
   }
 
   tags = {
-    Name = "smart-bin-mqtt-sg"
+    Name = "${var.project_name}-mqtt-sg"
   }
 }
 
 resource "aws_mq_broker" "mqtt_broker" {
   broker_name        = "${lower(var.project_name)}-mqtt"
-  engine_type        = "RabbitMQ"
-  engine_version     = "3.13"
+  engine_type        = "ActiveMQ"
+  engine_version     = "5.18"
   host_instance_type = "mq.t3.micro"
   deployment_mode    = "SINGLE_INSTANCE"
 
@@ -58,19 +74,15 @@ resource "aws_mq_broker" "mqtt_broker" {
   publicly_accessible = true
   security_groups     = [aws_security_group.mqtt_broker_sg.id]
 
-  # Security groups cannot be changed after creation for RabbitMQ brokers
-  lifecycle {
-    ignore_changes = [security_groups]
-  }
-
   configuration {
-    id       = aws_mq_configuration.rabbitmq_config.id
-    revision = aws_mq_configuration.rabbitmq_config.latest_revision
+    id       = aws_mq_configuration.activemq_config.id
+    revision = aws_mq_configuration.activemq_config.latest_revision
   }
 
   user {
-    username = var.rmq_username
-    password = var.rmq_password
+    username       = var.rmq_username
+    password       = var.rmq_password
+    console_access = true
   }
 
   auto_minor_version_upgrade = true
@@ -84,18 +96,28 @@ resource "aws_mq_broker" "mqtt_broker" {
   apply_immediately = true
 
   tags = {
-    Name = "smart-bin-mqtt"
+    Name = "${var.project_name}-mqtt"
   }
 }
 
-resource "aws_mq_configuration" "rabbitmq_config" {
-  description    = "RabbitMQ MQTT Configuration"
-  name           = "rabbitmq-mqtt-broker"
-  engine_type    = "RabbitMQ"
-  engine_version = "3.13"
+resource "aws_mq_configuration" "activemq_config" {
+  description    = "ActiveMQ MQTT Configuration"
+  name           = "${lower(var.project_name)}-activemq-mqtt"
+  engine_type    = "ActiveMQ"
+  engine_version = "5.18"
 
   data = <<DATA
-# Default RabbitMQ delivery acknowledgement timeout is 30 minutes in milliseconds
-consumer_timeout = 1800000
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<broker xmlns="http://activemq.apache.org/schema/core">
+  <plugins>
+    <forcePersistencyModeBrokerPlugin persistenceFlag="true"/>
+    <statisticsBrokerPlugin/>
+    <timeStampingBrokerPlugin ttlCeiling="86400000" zeroExpirationOverride="86400000"/>
+  </plugins>
+  <transportConnectors>
+    <transportConnector name="mqtt" uri="mqtt://0.0.0.0:1883"/>
+    <transportConnector name="mqtt+ssl" uri="mqtt+ssl://0.0.0.0:8883"/>
+  </transportConnectors>
+</broker>
 DATA
 }
